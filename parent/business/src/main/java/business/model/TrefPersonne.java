@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name= "TREF_PERSONNE", schema="public")
@@ -48,6 +49,7 @@ public class TrefPersonne {
 	}
 	
 	@NotNull
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATE_TIME")
 	public Date getCreateTime() {

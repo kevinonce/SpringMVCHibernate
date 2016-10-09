@@ -57,9 +57,10 @@ public class AppController {
 		}
 		
 		trefPersonneService.saveTrefPersonne(trefPersonne);
-
-		model.addAttribute("success", "TrefPersonne " + trefPersonne.getPeName() + " registered successfully");
-		return "success";
+		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
+		model.addAttribute("trefPersonnes", trefPersonnes);
+		model.addAttribute("success", "Person "+trefPersonne.getPeName() + "[ID "+trefPersonne.getPeIcd()+"] registered successfully");
+		return "alltrefpersonne";
 	}
 
 
@@ -87,9 +88,11 @@ public class AppController {
 		}
 
 		trefPersonneService.updateTrefPersonne(trefPersonne);
-
-		model.addAttribute("success", "TrefPersonne " + trefPersonne.getPeName()	+ " updated successfully");
-		return "success";
+		
+		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
+		model.addAttribute("trefPersonnes", trefPersonnes);
+		model.addAttribute("success","Person "+trefPersonne.getPeName() + "[ID "+trefPersonne.getPeIcd()+"] updated successfully");
+		return "alltrefpersonne";
 	}
 
 	
