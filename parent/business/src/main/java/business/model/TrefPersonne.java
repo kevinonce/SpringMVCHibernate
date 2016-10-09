@@ -28,7 +28,7 @@ public class TrefPersonne {
 	}
 	
 	@Id
-	@Column(name = "PE_ICD")
+	@Column(name = "pe_icd")
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	public Integer getPeIcd() {
@@ -39,7 +39,7 @@ public class TrefPersonne {
 		this.peIcd = peIcd;
 	}
 
-	@Column(name = "PE_NAME")
+	@Column(name = "pe_name")
 	public String getPeName() {
 		return peName;
 	}
@@ -51,7 +51,7 @@ public class TrefPersonne {
 	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	public Date getCreateTime() {
 		return createTime;
 	}

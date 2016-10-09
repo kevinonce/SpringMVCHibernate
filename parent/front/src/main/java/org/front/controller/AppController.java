@@ -100,7 +100,7 @@ public class AppController {
 	 * This method will delete an employee by it's SSN value.
 	 */
 	@RequestMapping(value = { "/delete-{id}-trefPersonne" }, method = RequestMethod.GET)
-	public String deleteEmployee(@PathVariable Integer id) {
+	public String deletePerson(@PathVariable Integer id) {
 		TrefPersonne trefPersonne = trefPersonneService.findById(id);
 		if(trefPersonne != null){
 			trefPersonneService.deleteTrefPersonne(trefPersonne);

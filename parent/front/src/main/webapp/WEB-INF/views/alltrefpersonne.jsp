@@ -28,7 +28,7 @@
 	<table class="table table-striped table-bordered text-center">
 		<thead class="bg-primary">
 		<tr>
-			<td>ID</td><td>Birth date</td><td>Name</td><td></td>
+			<td>ID</td><td>Birth date</td><td>Name</td><td>list of boat</td><td><a class="btn btn-info btn-ns" title="add person" href="<c:url value='/new' />"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
 		</tr>
 		</thead>
 		<c:forEach items="${trefPersonnes}" var="trefpersonne">
@@ -36,16 +36,16 @@
 				<td>${trefpersonne.peIcd}</td>
 				<td><spring:eval expression="trefpersonne.createTime" /></td>
 				<td>${trefpersonne.peName}</td>
+				<td><a class="btn btn-warning btn-ns" href="<c:url value='/bateaux/list/${trefpersonne.peIcd}' />"><span class="glyphicon glyphicon-search"></span></a></td>
 				<td>
 					<div class="btn-group">
-						<a class="btn btn-warning btn-ns" href="<c:url value='/edit-${trefpersonne.peIcd}-trefPersonne' />"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a class="btn btn-warning btn-ns" href="<c:url value='/delete-${trefpersonne.peIcd}-trefPersonne' />"><span class="glyphicon glyphicon-remove"></span></a>
+						<a class="btn btn-warning btn-ns" title="modify" href="<c:url value='/edit-${trefpersonne.peIcd}-trefPersonne' />"><span class="glyphicon glyphicon-pencil"></span></a>
+						<a class="btn btn-warning btn-ns" title="delete" href="<c:url value='/delete-${trefpersonne.peIcd}-trefPersonne' />"><span class="glyphicon glyphicon-remove"></span></a>
 					</div>
 				</td>
 			</tr>
 		</c:forEach>
 	</table>
-	<a class="btn btn-info btn-ns" href="<c:url value='/new' />"><span class="glyphicon glyphicon-plus-sign"></span></a>
 	</div>
 	<c:if test="${success != null}">
 		<div class="alert alert-success">

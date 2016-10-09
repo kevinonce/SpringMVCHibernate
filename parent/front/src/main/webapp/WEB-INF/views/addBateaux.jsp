@@ -7,7 +7,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>TrefPersonne Registration Form</title>
+	<title>boat Registration Form</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
 	<!-- jQuery library -->
@@ -26,23 +26,27 @@
 	
 	<div class="well">
 	<h2 class="text-center">Registration Form</h2>
-	<form:form method="POST" modelAttribute="trefPersonne" cssClass="form-horizontal">
+	<form:form method="POST" modelAttribute="trefBateau" cssClass="form-horizontal">
 		<div class="form-group">
-			<form:input type="hidden" path="peIcd" id="peIcd"/>
+			<form:input type="hidden" path="bpIcd" id="bpIcd"/>
 		</div>
 		<div class="form-group">
-			<label class ="control-label col-sm-offset-2 col-sm-2" for="peName">Name: </label> 
+			<label class ="control-label col-sm-offset-2 col-sm-2" for="bpDevise">Name: </label> 
 			<div class="col-sm-4">
-				<form:input cssClass="form-control" path="peName" id="peName"/>
+				<form:input cssClass="form-control" path="bpDevise" id="bpDevise"/>
 			</div>
-			<form:errors path="peName" cssClass="error"/>
+			<form:errors path="bpDevise" cssClass="error"/>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-offset-2 col-sm-2" for="createTime">birth date: </label>
+			<label class="control-label col-sm-offset-2 col-sm-2" for="bpBatelier">Person: </label>
 			<div class="col-sm-4">
-				<form:input cssClass="form-control" path="createTime" id="createTime"/>
+				<form:select cssClass="form-control" path="bpBatelier.peIcd" id="bpBatelier">
+					<c:forEach items="${listePersons}" var="trefpersonne">
+						<form:option selected="${trefBateau.bpBatelier.peIcd == trefpersonne.peIcd ? 'selected':''}" value="${trefpersonne.peIcd}">${trefpersonne.peIcd} - ${trefpersonne.peName}</form:option>
+					</c:forEach>
+				</form:select>
 			</div>
-			<form:errors path="createTime" cssClass="error"/>
+			<form:errors path="bpBatelier" cssClass="error"/>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-10">
