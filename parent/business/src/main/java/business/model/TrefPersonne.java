@@ -12,6 +12,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -39,6 +40,7 @@ public class TrefPersonne {
 		this.peIcd = peIcd;
 	}
 
+	@NotEmpty
 	@Column(name = "pe_name")
 	public String getPeName() {
 		return peName;

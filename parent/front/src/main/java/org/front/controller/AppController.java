@@ -27,9 +27,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
 	public String listTrefPersonnes(ModelMap model) {
-
-		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
-		model.addAttribute("trefPersonnes", trefPersonnes);
+		initModelForAllTrefPersonneView(model,false,false,null);
 		return "alltrefpersonne";
 	}
 
@@ -38,9 +36,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = { "/new" }, method = RequestMethod.GET)
 	public String newTrefPersonne(ModelMap model) {
-		TrefPersonne trefPersonne = new TrefPersonne();
-		model.addAttribute("trefPersonne", trefPersonne);
-		model.addAttribute("edit", false);
+		initModelForRegistrationView(model, false,new TrefPersonne());
 		return "registration";
 	}
 
@@ -53,13 +49,13 @@ public class AppController {
 			ModelMap model) {
 
 		if (result.hasErrors()) {
+			initModelForRegistrationView(model,false,trefPersonne);
 			return "registration";
 		}
 		
 		trefPersonneService.saveTrefPersonne(trefPersonne);
-		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
-		model.addAttribute("trefPersonnes", trefPersonnes);
-		model.addAttribute("success", "Person "+trefPersonne.getPeName() + "[ID "+trefPersonne.getPeIcd()+"] registered successfully");
+		initModelForAllTrefPersonneView(model,true,true,trefPersonne);
+
 		return "alltrefpersonne";
 	}
 
@@ -70,8 +66,7 @@ public class AppController {
 	@RequestMapping(value = { "/edit-{id}-trefPersonne" }, method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Integer id, ModelMap model) {
 		TrefPersonne trefPersonne = trefPersonneService.findById(id);
-		model.addAttribute("trefPersonne", trefPersonne);
-		model.addAttribute("edit", true);
+		initModelForRegistrationView(model, true,trefPersonne);
 		return "registration";
 	}
 	
@@ -84,14 +79,13 @@ public class AppController {
 			ModelMap model, @PathVariable Integer id) {
 
 		if (result.hasErrors()) {
+			initModelForRegistrationView(model,true,trefPersonne);
 			return "registration";
 		}
 
 		trefPersonneService.updateTrefPersonne(trefPersonne);
-		
-		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
-		model.addAttribute("trefPersonnes", trefPersonnes);
-		model.addAttribute("success","Person "+trefPersonne.getPeName() + "[ID "+trefPersonne.getPeIcd()+"] updated successfully");
+		initModelForAllTrefPersonneView(model,true,false,trefPersonne);
+
 		return "alltrefpersonne";
 	}
 
@@ -108,4 +102,18 @@ public class AppController {
 		return "redirect:/list";
 	}
 
+	private void initModelForRegistrationView(ModelMap model, boolean edit, TrefPersonne personne){
+		model.addAttribute("trefPersonne", personne);
+		model.addAttribute("edit", edit);
+	}
+	
+	private void initModelForAllTrefPersonneView(ModelMap model, boolean successSentence, boolean created, TrefPersonne trefPersonne ){
+		List<TrefPersonne> trefPersonnes = trefPersonneService.findAllTrefPersonne();
+		model.addAttribute("trefPersonnes", trefPersonnes);
+		if(successSentence){
+			model.addAttribute("success","Person "+trefPersonne.getPeName() + "[ID "+trefPersonne.getPeIcd()+"] "+(created ? "registered":"updated")+" successfully");
+		}
+		
+	}
+	
 }

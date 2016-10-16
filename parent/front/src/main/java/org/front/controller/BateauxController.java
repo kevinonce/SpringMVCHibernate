@@ -29,10 +29,7 @@ public class BateauxController {
 	
 	@RequestMapping(value = {"/list/{id}" }, method = RequestMethod.GET)
 	public String listBateau( @PathVariable Integer id,ModelMap model) {
-		TrefPersonne personne = trefPersonneService.findById(id);
-		List<TrefBateaux> listeBateaux = trefBateauxService.finByBatelier(id);
-		model.addAttribute("listeBateaux", listeBateaux);
-		model.addAttribute("personne",personne);
+		initModelForListeBateauxView(model,id,false,false,null);
 		return "listeBateaux";
 	}
 	
@@ -49,11 +46,8 @@ public class BateauxController {
 	
 	@RequestMapping(value = { "/edit-{id}-bateau" }, method = RequestMethod.GET)
 	public String editBateau(@PathVariable Integer id, ModelMap model) {
-		TrefBateaux trefBateau = trefBateauxService.findById(id);
-		List<TrefPersonne> listePersons = trefPersonneService.findAllTrefPersonne();
-		model.addAttribute("trefBateau", trefBateau);
-		model.addAttribute("edit", true);
-		model.addAttribute("listePersons",listePersons);
+		TrefBateaux trefBateaux = trefBateauxService.findById(id);
+		initModelForAddBateauxView(model,true,trefBateaux);
 		return "addBateaux";
 	}
 	
@@ -62,30 +56,23 @@ public class BateauxController {
 			ModelMap model) {
 
 		if (result.hasErrors()) {
+			initModelForAddBateauxView(model, true,trefBateaux);
 			return "addBateaux";
 		}
 
 		trefBateauxService.updateTrefBateaux(trefBateaux);
-		
-		TrefPersonne personne = trefPersonneService.findById(trefBateaux.getBpBatelier().getPeIcd());
-		List<TrefBateaux> listeBateaux = trefBateauxService.finByBatelier(personne.getPeIcd());
-		model.addAttribute("listeBateaux", listeBateaux);
-		model.addAttribute("personne",personne);
-		
-		model.addAttribute("success","Boat "+trefBateaux.getBpDevise() + "[ID "+trefBateaux.getBpIcd()+"] updated successfully");
+		initModelForListeBateauxView(model,trefBateaux.getBpBatelier().getPeIcd(),true,false,trefBateaux);
+
 		return "listeBateaux";
 	}
 	
 	@RequestMapping(value = { "/new/{id}" }, method = RequestMethod.GET)
 	public String newTrefBateaux(ModelMap model, @PathVariable Integer id) {
-		TrefBateaux trefBateau = new TrefBateaux();
+		TrefBateaux trefBateaux = new TrefBateaux();
 		TrefPersonne personne = new TrefPersonne();
 		personne.setPeIcd(id);
-		trefBateau.setBpBatelier(personne);
-		List<TrefPersonne> listePersons = trefPersonneService.findAllTrefPersonne();
-		model.addAttribute("trefBateau", trefBateau);
-		model.addAttribute("edit", false);
-		model.addAttribute("listePersons",listePersons);
+		trefBateaux.setBpBatelier(personne);
+		initModelForAddBateauxView(model,false,trefBateaux);
 		return "addBateaux";
 	}
 
@@ -94,17 +81,30 @@ public class BateauxController {
 			ModelMap model) {
 
 		if (result.hasErrors()) {
+			initModelForAddBateauxView(model, false,trefBateaux);
 			return "addBateaux";
 		}
 		
 		trefBateauxService.saveTrefBateaux(trefBateaux);
-		TrefPersonne personne = trefPersonneService.findById(trefBateaux.getBpBatelier().getPeIcd());
-		List<TrefBateaux> listeBateaux = trefBateauxService.finByBatelier(personne.getPeIcd());
-		model.addAttribute("listeBateaux", listeBateaux);
-		model.addAttribute("personne",personne);
-		
-		model.addAttribute("success","Boat "+trefBateaux.getBpDevise() + "[ID "+trefBateaux.getBpIcd()+"] registered successfully");
+		initModelForListeBateauxView(model,trefBateaux.getBpBatelier().getPeIcd(),true,true,trefBateaux);
+
 		return "listeBateaux";
 	}
 
+	private void initModelForAddBateauxView(ModelMap model, boolean edit, TrefBateaux trefBateaux){
+		List<TrefPersonne> listePersons = trefPersonneService.findAllTrefPersonne();
+		model.addAttribute("trefBateaux", trefBateaux);
+		model.addAttribute("edit", edit);
+		model.addAttribute("listePersons",listePersons);
+	}
+	
+	private void initModelForListeBateauxView(ModelMap model, Integer personneId, boolean successSentence, boolean created, TrefBateaux trefBateaux){
+		TrefPersonne personne = trefPersonneService.findById(personneId);
+		List<TrefBateaux> listeBateaux = trefBateauxService.finByBatelier(personneId);
+		model.addAttribute("listeBateaux", listeBateaux);
+		model.addAttribute("personne",personne);
+		if(successSentence){
+			model.addAttribute("success","Boat "+trefBateaux.getBpDevise() + "[ID "+trefBateaux.getBpIcd()+"] "+(created ? "registered":"updated")+" successfully");
+		}
+	}
 }

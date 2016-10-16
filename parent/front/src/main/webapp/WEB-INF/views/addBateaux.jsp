@@ -26,7 +26,7 @@
 	
 	<div class="well">
 	<h2 class="text-center">Registration Form</h2>
-	<form:form method="POST" modelAttribute="trefBateau" cssClass="form-horizontal">
+	<form:form method="POST" modelAttribute="trefBateaux" cssClass="form-horizontal">
 		<div class="form-group">
 			<form:input type="hidden" path="bpIcd" id="bpIcd"/>
 		</div>
