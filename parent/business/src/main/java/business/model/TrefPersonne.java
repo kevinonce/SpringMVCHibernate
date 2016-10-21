@@ -15,6 +15,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+
 @Entity
 @Table(name= "TREF_PERSONNE", schema="public")
 public class TrefPersonne {
@@ -54,6 +57,7 @@ public class TrefPersonne {
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "create_time")
+	@JsonSerialize(using=DateSerializer.class)
 	public Date getCreateTime() {
 		return createTime;
 	}

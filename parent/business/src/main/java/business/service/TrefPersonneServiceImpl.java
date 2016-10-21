@@ -38,4 +38,8 @@ public class TrefPersonneServiceImpl implements TrefPersonneService {
 		trefPersonneDao.updateTrefPersonne(personne);
 	}
 
+	public List<TrefPersonne> findByName(String name) {
+		return trefPersonneDao.findByName(name);
+	}
+
 }

@@ -11,4 +11,5 @@ public interface TrefPersonneService {
 	public void deleteTrefPersonne(TrefPersonne personne);
 	public List<TrefPersonne> findAllTrefPersonne();
 	public void updateTrefPersonne(TrefPersonne personne);
+	public List<TrefPersonne> findByName(String name);
 }

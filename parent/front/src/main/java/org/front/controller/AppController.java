@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import business.model.TrefPersonne;
 import business.service.TrefPersonneService;
@@ -100,6 +102,11 @@ public class AppController {
 			trefPersonneService.deleteTrefPersonne(trefPersonne);
 		}
 		return "redirect:/list";
+	}
+	
+	@RequestMapping(value = { "/search"}, method = RequestMethod.GET)
+	public @ResponseBody List<TrefPersonne> searchTrefPersonnes(@RequestParam String query) {
+		return trefPersonneService.findByName(query);
 	}
 
 	private void initModelForRegistrationView(ModelMap model, boolean edit, TrefPersonne personne){

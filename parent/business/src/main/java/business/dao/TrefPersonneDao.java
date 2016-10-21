@@ -15,5 +15,7 @@ public interface TrefPersonneDao {
     public void updateTrefPersonne(TrefPersonne trefPersonne);
     
     public void deleteTrefPersonne(TrefPersonne trefPersonne);
+    
+    public List<TrefPersonne> findByName(String name);
 
 }

@@ -2,6 +2,7 @@ package business.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,12 @@ public class TrefPersonneDaoImpl extends AbstractDao<Integer, TrefPersonne> impl
 
 	public void deleteTrefPersonne(TrefPersonne trefPersonne) {
 		delete(trefPersonne);
+	}
+
+	public List<TrefPersonne> findByName(String name) {
+		Query query = getSession().createQuery("from TrefPersonne where upper(peName) like upper(?))");
+		query.setParameter(0, "%"+name+"%");
+		return query.list();
 	}
 
 }

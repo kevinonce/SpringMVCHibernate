@@ -19,6 +19,7 @@ public class TrefBateaux {
 	private Integer bpIcd;
 	private String bpDevise;
 	private TrefPersonne bpBatelier;
+	private TrefPersonne bpExploitant;
 	
 	public TrefBateaux() {
 		super();
@@ -54,12 +55,24 @@ public class TrefBateaux {
 		this.bpBatelier = bpBatelier;
 	}
 
+	
+	@ManyToOne
+	@JoinColumn(name="bp_exploitant")
+	public TrefPersonne getBpExploitant() {
+		return bpExploitant;
+	}
+
+	public void setBpExploitant(TrefPersonne bpExploitant) {
+		this.bpExploitant = bpExploitant;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bpBatelier == null) ? 0 : bpBatelier.hashCode());
 		result = prime * result + ((bpDevise == null) ? 0 : bpDevise.hashCode());
+		result = prime * result + ((bpExploitant == null) ? 0 : bpExploitant.hashCode());
 		result = prime * result + ((bpIcd == null) ? 0 : bpIcd.hashCode());
 		return result;
 	}
@@ -83,6 +96,11 @@ public class TrefBateaux {
 				return false;
 		} else if (!bpDevise.equals(other.bpDevise))
 			return false;
+		if (bpExploitant == null) {
+			if (other.bpExploitant != null)
+				return false;
+		} else if (!bpExploitant.equals(other.bpExploitant))
+			return false;
 		if (bpIcd == null) {
 			if (other.bpIcd != null)
 				return false;
@@ -93,6 +111,8 @@ public class TrefBateaux {
 
 	@Override
 	public String toString() {
-		return "TrefBateaux [bpIcd=" + bpIcd + ", bpDevise=" + bpDevise + ", bpBatelier=" + bpBatelier + "]";
+		return "TrefBateaux [bpIcd=" + bpIcd + ", bpDevise=" + bpDevise + ", bpBatelier=" + bpBatelier
+				+ ", bpExploitant=" + bpExploitant + "]";
 	}
+
 }
